@@ -23,6 +23,9 @@ router.post("/", async (req, res) => {
   });
 
   const inputSource = mindeeClient.docFromBase64(base64Data, "teste");
+  //   Na chamada nessa API é necessário passar esse segundo parâmetro que
+  // seria o nome do arquivo, provavelmente para controle de algum dashboard
+  // no site da API, mas não utilizamos nesse projeto.
 
   const apiResponse = mindeeClient.parse(mindee.product.ReceiptV5, inputSource);
 
