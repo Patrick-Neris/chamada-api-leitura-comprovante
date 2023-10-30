@@ -1,0 +1,13 @@
+Enzo Moraes     RM: 87424
+Gabriel Aires   RM: 88731
+Matheus Martins RM: 89129
+Mike Almeida    RM: 87413
+Patrick Neris   RM: 88425
+
+Para iniciar a API basta rodar o comando:
+
+node "src/app.js"
+
+Ela está configurada na porta 8800, portanto a URL é localhost:8800/
+
+Os caminhos são os nomes dos arquivos dentro de /src/api
