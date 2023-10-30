@@ -1,10 +1,20 @@
 const express = require("express");
 const mindee = require("mindee");
-const { uuid } = require("uuidv4");
+const { v4: uuidv4 } = require("uuid");
 const router = express.Router();
+const fs = require("fs");
 
 router.post("/", async (req, res) => {
-  var path = req.body.path;
+  var image = req.body.image;
+  const outputFileName = "./src/temp/recibo.jpeg";
+  const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
+  const buffer = Buffer.from(base64Data, "base64");
+
+  fs.writeFile(outputFileName, buffer, (err) => {
+    if (err) {
+      console.error(`Erro ao escrever o arquivo: ${err}`);
+    }
+  });
 
   let obj = {};
 
@@ -12,7 +22,7 @@ router.post("/", async (req, res) => {
     apiKey: "90feff09f17391f2e68c6c5473a97636",
   });
 
-  const inputSource = mindeeClient.docFromPath(path);
+  const inputSource = mindeeClient.docFromBase64(base64Data, "teste");
 
   const apiResponse = mindeeClient.parse(mindee.product.ReceiptV5, inputSource);
 
@@ -22,7 +32,7 @@ router.post("/", async (req, res) => {
       date: resp.document.inference.prediction.date.value,
       time: resp.document.inference.prediction.time.value,
       value: resp.document.inference.prediction.totalAmount.value,
-      id: uuid(),
+      id: uuidv4(),
     };
     console.log(obj);
   });
