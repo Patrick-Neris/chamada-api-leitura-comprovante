@@ -5,7 +5,16 @@ const router = express.Router();
 const fs = require("fs");
 
 router.post("/", async (req, res) => {
+  console.log("req: ", req);
+  console.log("req.body: ", req.body);
+  console.log("req.body.image: ", req.body.image);
+
   var image = req.body.image;
+  if (image == undefined) {
+    res.send({
+      error: "imagem não carregada",
+    });
+  }
   const outputFileName = "./src/temp/recibo.jpeg";
   const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
   const buffer = Buffer.from(base64Data, "base64");
